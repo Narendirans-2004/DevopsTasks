@@ -1,0 +1,202 @@
+INSTALL
+*Git
+*Maven
+*Docker
+*Jenkins
+*Virtual machine -> Ubuntu
+
+DOCKER COMMANDS
+>>docker images 
+>>docker run -itd -P <Image id>
+>>docker ps (to check if container is running)
+>>docker ls
+>>docker copy 
+>>docker exec -it <container_id> bash (to access running container)
+>>docker stop <container_id> (to stop a container)
+>>docker rm <container_id> (to remove a container)
+>>docker rmi <image_id> (to remove images)
+
+----------x----------x----------x----------x----------x----------
+
+Docker is a platform that provides virtual containers on which an application can be deployed independent of the underlying OS of the server. Further the container can be created from a replica called docker image which contains all the dependencies and can run on any OS that has docker engine, with similar results.
+
+VIRTUALIZATION:
+Virtualization is the process of sharing hardware resources across several virtually isolated and mutually independent systems. It is achieved by using a hypervisor which acts as a bridge between the Operating System of each of the virtual machines and the underlying hardware.
+Applications in virtual environments run on a host operating system on top of the hypervisor.
+
+BASIC DOCKER COMMANDS
+	Display docker images available in our machine
+$ docker images
+	Download docker image.
+$ docker pull <image-name / image-id>
+	Run docker image.
+$ docker run <image-name / image-id>
+	Delete docker image.
+$ docker rmi <image-name / image-id>
+	Display all running docker containers.
+$ docker ps 	
+	Display all running and stopped containers.
+$ docker ps -a
+	Delete docker container.
+$ docker rm <container-id>
+	Delete docker image forcefully.
+$ docker rmi  -f <image-id>
+	Stop Docker container.
+$ docker stop <container-id>
+
+#DOCKER COMMANDS FOR UBUNTU
+$ sudo apt update -y
+$ sudo apt install docker -y 
+$ sudo service docker start (or) sudo systemctl start docker
+$ sudo service docker enable (or) sudo systemctl enable docker
+
+DOCKER COMPOSE
+Docker Compose is a tool that allows you to define and manage multi-container Docker applications. It simplifies the process of running multiple containers, their configurations, and their interdependencies. Compose uses a YAML file to define the services, networks, and volumes required for your application.
+	Docker Compose is a tool which is used to manage multi container-based applications.
+	Using Docker Compose we can easily setup & deploy multi container-based applications.
+	We will give containers information to Docker Compose using YML file  (docker-compose.yml)
+	Docker Compose YML should have all the information related to containers creation.
+	Docker Compose YML File Looks Like:
+
+JENKINS
+Jenkins is an open-source automation tool written in Java programming language that allows continuous integration. Jenkins offers a straightforward way to set up a continuous integration or continuous delivery environment for almost any combination of languages and source code repositories using pipelines, as well as automating other routine development tasks.
+The following are the main or most popular Jenkins use cases:
+●	Continuous Integration: With Jenkins pipelines, we can achieve CI for both applications and infrastructure as code.
+●	Continuous Delivery: You can set up well-defined and automated application delivery workflows with Jenkins pipelines.
+
+Jenkins achieves CI (Continuous Integration) and CD (Continuous Deployment) with the help of plugins. Plugins are used to allow the integration of various DevOps stages. If you want to integrate a particular tool, you must install the plugins for that tool.
+
+ADVANTAGES OF JENKINS:
+●	It is an open-source tool.
+●	It is free of cost.
+●	It does not require additional installations or components. Means it is easy to install.
+●	Easily configurable.
+●	It supports 1000 or more plugins to ease your work. If a plugin does not exist, you can write the script for it and share with community.
+●	It is built in java and hence it is portable.
+●	It is platform independent. It is available for all platforms and different operating systems. Like OS X, Windows, or Linux.
+●	Easy support since its open source and widely used.
+●	Jenkins also supports cloud-based architecture so that we can deploy Jenkins in cloud-based platforms.
+
+----------x----------x----------x---------x----------x----------
+
+COMMANDS IN UBUNTU
+
+sudo apt update
+
+=>JAVA
+sudo apt install fontconfig openjdk-17-jre
+java -version
+
+=>GIT
+git --version
+
+=>MAVEN
+sudo apt install maven -y
+mvn -version
+
+=>JENKINS
+-->
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+--<
+sudo service Jenkins restart
+sudo service Jenkins status
+Jenkins --version
+
+=>TO GET PASS IN JENKINS LOCALHOST
+sudo cat <localhost:8080/>
+
+=>DOCKER
+sudo apt install docker.io -y 
+sudo service docker restart 
+sudo service docker status
+sudo usermod -aG docker $USER
+docker images 
+docker ps 
+sudo chmod 666 /var/run/docker.sock (if images failed)
+
+=>MINIKUBE
+-->
+curl -LO https://dl.k8s.io/release/v1.32.0/bin/linux/amd64/kubectl 
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+-->
+chmod +x kubectl
+mkdir -p ~/.local/bin
+mv ./kubectl ~/.local/bin/kubectl
+-->
+kubectl version --client
+-->
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+-->
+minikube start
+docker ps (check is container is running)
+kubectl get node
+kubectl get pod (No resources found)
+kubectl get pod -o wide (No resources found)
+minikube status
+kubeclt get deploy 
+kubectl get replica
+
+sudo nano docker-compose.yml
+(
+version: '3'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - 80:80
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+)
+ls
+-->
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+-->
+docker-compose up -d
+docker-compose images
+docker-compose ps
+docker-compose down
+docker exec -it <created name> /bin/bash
+
+=>
+git clone <repo>
+cd <repo name>
+ls
+mvn clean package
+cd target/
+ls
+cd ..
+ls
+
+=>
+cd .m2/
+cd repository
+cd com
+cd mycompany
+cd app
+cd my-app
+cd ../..
+cd <build directory (till target)>
+ls
+
+
+=>
+cd DevOps_Guvi
+sudo nano Jenkins
+(
+)
+git add .
+git commit
+git push
+(password -> git token)
+sudo chmod 666 /var/run/docker.sock
